@@ -1,23 +1,30 @@
 # mcp-icd10
 
-MCP server for ICD-10-CM diagnosis code lookup via NLM Clinical Tables API. No API key required.
+Search and browse ICD-10 diagnosis codes via the NLM Clinical Tables API.
+
+> **Free API** — No API key required.
 
 ## Tools
 
 | Tool | Description |
 |------|-------------|
-| `search_codes` | Search codes by keyword or prefix |
-| `get_code` | Get details for a specific code |
-| `browse_chapter` | Browse codes by chapter/category |
-| `list_chapters` | List all 21 ICD-10-CM chapters |
+| `search_codes` | Search ICD-10-CM diagnosis codes by keyword or code prefix. |
+| `get_code` | Get details for a specific ICD-10-CM code. |
+| `browse_chapter` | Browse ICD-10-CM codes by chapter/category prefix. |
+| `list_chapters` | List ICD-10-CM top-level chapters and their code ranges. |
 
-## Install
+## Installation
 
 ```bash
-npm install && npm run build
+git clone https://github.com/PetrefiedThunder/mcp-icd10.git
+cd mcp-icd10
+npm install
+npm run build
 ```
 
 ## Usage with Claude Desktop
+
+Add to your `claude_desktop_config.json`:
 
 ```json
 {
@@ -28,6 +35,12 @@ npm install && npm run build
     }
   }
 }
+```
+
+## Usage with npx
+
+```bash
+npx mcp-icd10
 ```
 
 ## License
