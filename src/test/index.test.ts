@@ -1,5 +1,25 @@
+import { resolve } from "node:path";
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { describe, it, expect } from "vitest";
 describe("mcp-icd10", () => {
+  it("registers the ICD-10 tools over MCP stdio", async () => {
+    const transport = new StdioClientTransport({
+      command: process.execPath,
+      args: [resolve("dist/index.js")],
+    });
+    const client = new Client({ name: "mcp-icd10-test", version: "1.0.0" }, { capabilities: {} });
+    try {
+      await client.connect(transport, { timeout: 5_000 });
+      const { tools } = await client.listTools(undefined, { timeout: 5_000 });
+      expect(tools.map((tool) => tool.name).sort()).toEqual([
+        "browse_chapter", "get_code", "list_chapters", "search_codes",
+      ]);
+    } finally {
+      await client.close();
+    }
+  }, 15_000);
+
   it("should build search URLs", () => {
     const params = new URLSearchParams({ terms: "diabetes", maxList: "20" });
     expect(`https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?${params}`).toContain("terms=diabetes");
