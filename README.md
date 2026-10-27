@@ -45,4 +45,4 @@ npx mcp-icd10
 
 ## License
 
-MIT
+Apache-2.0
